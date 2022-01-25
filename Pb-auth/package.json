@@ -1,0 +1,37 @@
+{
+  "name": "sun-philips-sf-oauth",
+  "version": "1.0.0",
+  "description": "App for making common salesforce authentication.",
+  "main": "app.js",
+  "author": "anna.rathinam@philips.com",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.0",
+    "request": "^2.83.0",
+    "memory-cache": "^0.2.0"
+  },
+  "scripts": {
+    "startServer": "set salesforceConnectedAppName=SunsmarsuitQA&& set salesforceBaseUrl=https://testercustomer-developer-edition.ap7.force.com&& set salesforceRedirectUrl=http://authdev.eu-west.philips-healthsuite.com&& set salesforceClientId=3MVG9ZL0ppGP5UrBxxUaCb0_A2T3xl.F_4nAcHdp3D3UP.60Dr.HuzidYxj5pRYpYL3X2nGERalluMX1ZK7dY&& set salesforceClientSecret=1848822164563787040&& set authMessage=eu-west.philips-healthsuite.com&& set authProxyCacheExpiryTime=20&& set sessionCacheExpiryTime=19&& set sessionCacheExpiryOffsetTime=5&& node server.js",
+    "start": "set salesforceConnectedAppName=sundev&& set salesforceBaseUrl=https://testercustomer-developer-edition.ap7.force.com&& set salesforceRedirectUrl=https://localhost:4000&& set salesforceClientId=3MVG9ZL0ppGP5UrBxxUaCb0_A2ecbyFH4XgeP6FdRY731JdefqxG55WZlib6DLR.1VxXRzUQsQsB7wQafYrUM&& set salesforceClientSecret=3655421386499526976&& set authMessage=eu-west.philips-healthsuite.com&& set authProxyCacheExpiryTime=20&& set sessionCacheExpiryTime=19&& set sessionCacheExpiryOffsetTime=5&& node server.js",
+    "test": "set salesforceConnectedAppName=sundev&& set salesforceBaseUrl=https://testercustomer-developer-edition.ap7.force.com&& set salesforceRedirectUrl=https://localhost:4000&& set salesforceClientId=3MVG9ZL0ppGP5UrBxxUaCb0_A2ecbyFH4XgeP6FdRY731JdefqxG55WZlib6DLR.1VxXRzUQsQsB7wQafYrUM&& set salesforceClientSecret=3655421386499526976&& set authMessage=eu-west.philips-healthsuite.com&& set authProxyCacheExpiryTime=20&& set sessionCacheExpiryTime=19&& set sessionCacheExpiryOffsetTime=5&& jest --detectOpenHandles",
+    "test:coverage": "set salesforceConnectedAppName=sundev&& set salesforceBaseUrl=https://testercustomer-developer-edition.ap7.force.com&& set salesforceRedirectUrl=https://localhost:4000&& set salesforceClientId=3MVG9ZL0ppGP5UrBxxUaCb0_A2ecbyFH4XgeP6FdRY731JdefqxG55WZlib6DLR.1VxXRzUQsQsB7wQafYrUM&& set salesforceClientSecret=3655421386499526976&& set authMessage=eu-west.philips-healthsuite.com&& set authProxyCacheExpiryTime=20&& set sessionCacheExpiryTime=19&& set sessionCacheExpiryOffsetTime=5&& jest --coverage",
+    "build": "gulp zip"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-zip": "^4.2.0",
+    "jest": "^23.6.0",
+    "supertest": "^3.3.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "automock": false,
+    "setupFiles": [
+      "./setupTests.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/setupTests.js"
+    ]
+  }
+}

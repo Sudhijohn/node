@@ -1,0 +1,47 @@
+#This is manifest yml file for SUNUI App
+---
+applications:
+# App name
+- name: $PB_AUTH_APP_NAME
+# App memory RAM
+  memory: 128M
+# Stack Name
+  stack: $CLOUDFOUNDRY_STACK
+# Number of instances to run
+  instances: 1
+# App buildpack
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+# App host name (router) --- This will vary per environment
+  host: $PB_AUTH_APP_NAME
+# App domain name (CF)
+  domain: $CLOUDFOUNDRY_APP_DOMAIN
+# Artifact file path
+  path: pbauthentication.zip
+# App start command
+  command: node server.js
+# CF Environment specific keys and its values( This will vary per environment)
+  env:
+# Enabling memory optimization for node app
+    OPTIMIZE_MEMORY: true
+# Salesforce connected App Name used for Auth Proxy
+    salesforceConnectedAppName: $SALESFORCECONNECTEDAPPNAME
+# Salesforce Base url for Auth Proxy
+    salesforceBaseUrl: $SALESFORCEBASEURL
+# Salesforce Redirection url
+    salesforceRedirectUrl: https://$PB_AUTH_APP_NAME.$CLOUDFOUNDRY_APP_DOMAIN
+# Salesforce TokenEndPoint
+    salesforceTokenEndpoint: $SALESFORCETOKENENDPOINT
+# Salesforce client Id
+    salesforceClientId: $SALESFORCECLIENTID
+# Salesforce Secret Id
+    salesforceClientSecret: $SALESFORCECLIENTSECRET
+# Auth Proxy Salesforce Response Cache Expiry Time in seconds
+    authProxyCacheExpiryTime: 20
+# PB Session Cache Expiry Time in minutes
+    sessionCacheExpiryTime: 19
+# PB Session Cache Expiry Offset Time in minutes
+    sessionCacheExpiryOffsetTime: 5
+# App authentication Message for Crypto
+    authMessage: $CLOUDFOUNDRY_APP_DOMAIN
+# App Build number to track the deployed artifact
+    build: DUMMY
