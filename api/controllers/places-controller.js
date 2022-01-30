@@ -10,27 +10,42 @@ const {
 const location = require("./../util/location");
 const Place = require("./../models/place");
 
-const getPlaceById = (req, res, next) => {
+const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
-  const place = DUMMY_PLACES.find((place) => placeId === place.id);
+  let place;
+  try {
+    place = await Place.findById(placeId);
+  } catch (error) {
+    return next(
+      commonErrorHandler("Could not find the place with the ID", 500)
+    );
+  }
   if (!place) {
     return next(
       commonErrorHandler("Could not find the place with the ID", 404)
     );
   }
-  res.json({ place });
+  res.json({ place: place.toObject({ getters: true }) });
 };
 
-const getPlacesByUserId = (req, res, next) => {
-  console.log(req.params);
+const getPlacesByUserId = async (req, res, next) => {
   const uid = req.params.uid;
-  const places = DUMMY_PLACES.filter((place) => place.creator === uid);
+  let places;
+  try {
+    places = await Place.find({ creator: uid });
+  } catch (error) {
+    return next(
+      commonErrorHandler("Could not find the place with the ID", 500)
+    );
+  }
   if (places.length === 0) {
     return next(
       commonErrorHandler("Could not find the places for this user id!", 404)
     );
   }
-  res.json({ places });
+  res.json({
+    places: places.map((place) => place.toObject({ getters: true })),
+  });
 };
 
 const createPlace = async (req, res, next) => {
@@ -39,7 +54,6 @@ const createPlace = async (req, res, next) => {
     const errorMessage = getErrorMessage(errors);
     return next(commonErrorHandler(errorMessage, 422));
   }
-  //getCoordsForUser();
   const {
     title,
     description,
@@ -49,14 +63,6 @@ const createPlace = async (req, res, next) => {
     image,
   } = req.body;
   let result;
-  // const createdNewPlace = new PlaceModel(
-  //   title,
-  //   description,
-  //   coordinates,
-  //   address,
-  //   creator
-  // );
-  console.log(title);
   const createdNewPlace = new Place({
     title,
     description,
@@ -65,7 +71,6 @@ const createPlace = async (req, res, next) => {
     creator,
     image,
   });
-  // DUMMY_PLACES.unshift(createdNewPlace);
   try {
     console.log(createdNewPlace);
     result = await createdNewPlace.save();
